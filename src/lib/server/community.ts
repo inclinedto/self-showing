@@ -9,6 +9,8 @@ export type PostRow = {
   alias: string;
   mood: string | null;
   content: string;
+  tags: string[] | null;
+  pinned_at: Date | null;
   status: PostItem["status"];
   like_count: number;
   comment_count: number;
@@ -41,7 +43,7 @@ export type QuestionRow = {
 };
 
 export const POST_COLUMNS =
-  "posts.id, posts.user_id, posts.alias, posts.mood, posts.content, posts.status, posts.like_count, posts.comment_count, posts.report_count, posts.created_at";
+  "posts.id, posts.user_id, posts.alias, posts.mood, posts.content, posts.tags, posts.pinned_at, posts.status, posts.like_count, posts.comment_count, posts.report_count, posts.created_at";
 
 export const QUESTION_COLUMNS =
   "id, user_id, content, is_public, status, answer, answered_at, created_at";
@@ -54,6 +56,8 @@ export function toPostItem(row: PostRow, viewerId: number | null): PostItem {
     alias: row.alias,
     mood: row.mood,
     content: row.content,
+    tags: row.tags ?? [],
+    pinned: row.pinned_at !== null && row.pinned_at !== undefined,
     likeCount: row.like_count,
     commentCount: row.comment_count,
     createdAt: iso(row.created_at),

@@ -1,5 +1,9 @@
 "use client";
 
+import { baseName } from "./files";
+
+export { baseName, formatBytes, zipFiles } from "./files";
+
 export type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
 
 export const IMAGE_EXTENSIONS: Record<ImageFormat, string> = {
@@ -9,10 +13,6 @@ export const IMAGE_EXTENSIONS: Record<ImageFormat, string> = {
 };
 
 export class ConvertError extends Error {}
-
-export function baseName(name: string): string {
-  return name.replace(/\.[^.]+$/, "") || "file";
-}
 
 /** Decodes an image, applying its EXIF orientation so phone photos are upright. */
 async function decode(file: Blob): Promise<ImageBitmap> {
@@ -168,28 +168,6 @@ export async function splitEveryPage(
   return results;
 }
 
-/** Stored without compression: PDFs and images are already compressed. */
-export async function zipFiles(files: { name: string; data: Uint8Array }[]): Promise<Blob> {
-  const { zipSync } = await import("fflate");
-  const used = new Set<string>();
-  const entries: Record<string, Uint8Array> = {};
-  for (const file of files) {
-    let name = file.name;
-    for (let suffix = 2; used.has(name); suffix++) {
-      name = file.name.replace(/(\.[^.]+)?$/, `-${suffix}$1`);
-    }
-    used.add(name);
-    entries[name] = file.data;
-  }
-  return new Blob([zipSync(entries, { level: 0 }) as BlobPart], { type: "application/zip" });
-}
-
 export function pdfBlob(data: Uint8Array): Blob {
   return new Blob([data as BlobPart], { type: "application/pdf" });
-}
-
-export function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 }

@@ -1,18 +1,10 @@
 "use client";
 
+import { downloadBlob } from "./files";
 import { safeFileName, sheetNames, tableToCsv } from "./tables";
 import type { ExtractedTable } from "./types";
 
-export function downloadBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
+export { downloadBlob };
 
 /** Plain numbers become real Excel numbers; IDs (leading zeros, >15 digits) stay text. */
 function excelValue(cell: string): string | number | null {

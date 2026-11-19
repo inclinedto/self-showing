@@ -1,0 +1,393 @@
+// Decorative beach for the home hero. Real colours are fine here: it's an illustration, not UI chrome.
+
+.scene {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #b4ebff 0%, #dcf6ff 48%, #f3fcff 72%);
+
+  [data-theme="dark"] & {
+    background: linear-gradient(180deg, #071824 0%, #0c2a3b 55%, #103546 75%);
+  }
+}
+
+// ---------- sky ----------
+
+.sun,
+.moon {
+  position: absolute;
+  top: 26px;
+  right: 7%;
+  width: 150px;
+  height: 150px;
+
+  @media (max-width: 768px) {
+    top: 14px;
+    right: 10px;
+    width: 88px;
+    height: 88px;
+  }
+}
+
+.sun {
+  animation: bob 7s ease-in-out infinite;
+
+  [data-theme="dark"] & {
+    display: none;
+  }
+}
+
+.rays {
+  fill: #ffbe3d;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 48s linear infinite;
+}
+
+.moon {
+  display: none;
+  animation: bob 9s ease-in-out infinite;
+
+  [data-theme="dark"] & {
+    display: block;
+  }
+}
+
+.stars {
+  position: absolute;
+  inset: 0 0 45% 0;
+  display: none;
+
+  [data-theme="dark"] & {
+    display: block;
+  }
+
+  svg {
+    position: absolute;
+    animation: twinkle 3.6s ease-in-out infinite;
+  }
+}
+
+.cloudShape {
+  fill: #ffffff;
+
+  [data-theme="dark"] & {
+    fill: #9ec3d4;
+    opacity: 0.14;
+  }
+}
+
+.cloudA,
+.cloudB {
+  position: absolute;
+  height: auto;
+}
+
+.cloudA {
+  top: 48px;
+  left: 6%;
+  width: 150px;
+  animation: drift 26s ease-in-out infinite alternate;
+
+  @media (max-width: 768px) {
+    top: 18px;
+    left: -24px;
+    width: 96px;
+  }
+}
+
+.cloudB {
+  top: 300px;
+  right: 5%;
+  width: 104px;
+  opacity: 0.9;
+  animation: drift 32s ease-in-out infinite alternate-reverse;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.gulls {
+  position: absolute;
+  top: 36px;
+  right: calc(7% + 170px);
+  width: 64px;
+
+  path {
+    fill: none;
+    stroke: #3d6b80;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  [data-theme="dark"] & {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// ---------- sea ----------
+
+.sea {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 132px;
+
+  @media (max-width: 768px) {
+    height: 96px;
+  }
+}
+
+.waveFar,
+.waveMid,
+.waveNear,
+.foam {
+  animation: slide linear infinite;
+}
+
+.waveFar {
+  fill: #29abe0;
+  animation-duration: 38s;
+
+  [data-theme="dark"] & {
+    fill: #0f4c66;
+  }
+}
+
+.waveMid {
+  fill: #5ccbef;
+  animation-duration: 26s;
+  animation-direction: reverse;
+
+  [data-theme="dark"] & {
+    fill: #146784;
+  }
+}
+
+.waveNear,
+.foam {
+  animation-duration: 18s;
+}
+
+.waveNear {
+  fill: #9ae6f7;
+
+  [data-theme="dark"] & {
+    fill: #1b86a3;
+  }
+}
+
+.foam {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0.9;
+  vector-effect: non-scaling-stroke;
+
+  [data-theme="dark"] & {
+    opacity: 0.3;
+  }
+}
+
+.boat {
+  position: absolute;
+  right: 26%;
+  bottom: 84px;
+  width: 46px;
+  animation: rock 5s ease-in-out infinite;
+  transform-origin: 50% 90%;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// ---------- beach ----------
+
+.palm {
+  position: absolute;
+  left: -14px;
+  bottom: -6px;
+  width: 230px;
+  height: 230px;
+
+  @media (max-width: 768px) {
+    left: -30px;
+    width: 140px;
+    height: 140px;
+  }
+}
+
+.shore {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  width: 210px;
+  height: 115px;
+
+  @media (max-width: 768px) {
+    width: 130px;
+    height: 72px;
+  }
+}
+
+.sand {
+  fill: #f3d39a;
+
+  [data-theme="dark"] & {
+    fill: #6e5a3a;
+  }
+}
+
+.sandLight {
+  fill: #f9e3b6;
+
+  [data-theme="dark"] & {
+    fill: #83704c;
+  }
+}
+
+.pebble {
+  fill: #e2b673;
+
+  [data-theme="dark"] & {
+    fill: #5a4a30;
+  }
+}
+
+.trunk,
+.trunkBands {
+  fill: none;
+  stroke-width: 15;
+}
+
+.trunk {
+  stroke: #b97c47;
+  stroke-linecap: round;
+}
+
+.trunkBands {
+  stroke: #9b6235;
+  stroke-dasharray: 3 10;
+}
+
+.fronds {
+  transform-box: view-box;
+  transform-origin: 150px 74px;
+  animation: sway 6s ease-in-out infinite alternate;
+}
+
+.leaf {
+  fill: #33b86e;
+}
+
+.leafDark {
+  fill: #23975a;
+}
+
+.rib {
+  fill: none;
+  stroke: #7fdca6;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+
+.coconut {
+  fill: #7a4a2a;
+}
+
+.starfish {
+  fill: #ff8a5c;
+  stroke: #ff8a5c;
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+.shell {
+  fill: #ffd0db;
+}
+
+.shellLines {
+  fill: none;
+  stroke: #f29bb0;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+// ---------- motion ----------
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translateX(28px);
+  }
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-1440px);
+  }
+}
+
+@keyframes rock {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(4px) rotate(3deg);
+  }
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-2.5deg);
+  }
+  to {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene * {
+    animation: none !important;
+  }
+}

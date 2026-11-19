@@ -1,0 +1,9 @@
+// Money values like ¥1,537,259.04 need wider tiles than the shared stats grid gives them.
+.money > div {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+
+.subtotal td {
+  background: var(--brand-alpha-weak);
+  font-weight: 600;
+}

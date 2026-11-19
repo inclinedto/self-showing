@@ -14,6 +14,20 @@ const NOUNS = [
   "旅人", "树懒", "狐狸", "海獭", "火烈鸟", "章鱼", "海星", "小熊",
 ];
 
+const NOUN_EMOJI: Record<string, string> = {
+  猫咪: "🐱", 柴犬: "🐕", 企鹅: "🐧", 松鼠: "🐿️", 刺猬: "🦔", 海豚: "🐬", 兔子: "🐰", 考拉: "🐨",
+  水獭: "🦦", 熊猫: "🐼", 仓鼠: "🐹", 小鹿: "🦌", 鲸鱼: "🐳", 麻雀: "🐦", 萤火虫: "✨", 蜗牛: "🐌",
+  向日葵: "🌻", 蒲公英: "🌼", 仙人掌: "🌵", 月亮: "🌙", 星星: "⭐", 云朵: "☁️", 橘子: "🍊", 西瓜: "🍉",
+  奶茶: "🧋", 布丁: "🍮", 饭团: "🍙", 风筝: "🪁", 纸飞机: "✈️", 灯塔: "🏝️", 邮筒: "📮", 雨伞: "☂️",
+  旅人: "🎒", 树懒: "🦥", 狐狸: "🦊", 海獭: "🦦", 火烈鸟: "🦩", 章鱼: "🐙", 海星: "🌟", 小熊: "🐻",
+};
+
+/** The avatar for an anonymous nickname: the emoji of its noun, e.g. "失眠的企鹅" → 🐧. */
+export function aliasEmoji(alias: string): string {
+  const noun = NOUNS.find((item) => alias.endsWith(item));
+  return (noun && NOUN_EMOJI[noun]) || "🐚";
+}
+
 /** Maps a hex digest to a stable, friendly nickname such as "失眠的企鹅". */
 export function aliasFromHex(hex: string): string {
   const value = Number.parseInt(hex.slice(0, 8), 16) || 0;

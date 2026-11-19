@@ -109,4 +109,13 @@ export const MIGRATIONS: { version: number; statements: string[] }[] = [
       "CREATE INDEX questions_status_idx ON questions (status, id DESC)",
     ],
   },
+  {
+    version: 2,
+    statements: [
+      "ALTER TABLE posts ADD COLUMN tags TEXT[] NOT NULL DEFAULT '{}'",
+      "ALTER TABLE posts ADD COLUMN pinned_at TIMESTAMPTZ",
+      "CREATE INDEX posts_tags_idx ON posts USING GIN (tags)",
+      "CREATE INDEX posts_created_idx ON posts (created_at)",
+    ],
+  },
 ];

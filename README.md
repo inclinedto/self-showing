@@ -16,7 +16,8 @@
 | 文档问答 | `/tools/ask` | 上传 PDF / Word / TXT 提问，回答标注页码出处并自动核查 |
 | AI 小助手 | `/tools/chat` | 通用对话：写作、翻译、答疑；对话记录只存在用户浏览器里 |
 | 格式转换 | `/tools/convert` | 图片转换压缩、图片转 PDF、PDF 转图片、PDF 合并 / 拆分；纯浏览器处理，免费不限次 |
-| 树洞 | `/treehole` | 匿名发帖（随机昵称）、心情标签、抱抱、匿名评论、举报（3 人举报自动隐藏） |
+| 小工具 | `/tools/<slug>` | 18 个纯浏览器小工具，免费不限次：字数统计、文本对比、编码转换、金额大写、JSON 格式化、时间戳、正则测试、哈希、进制转换、密码生成、二维码、九宫格切图、图片加水印、颜色工具、日期计算、单位换算、房贷计算、今天吃什么。工具箱首页 `/tools` 可搜索、按分类筛选，并记住最近用过的工具 |
+| 树洞 | `/treehole` | Memos 风格时间线：匿名发帖（随机昵称）、`#标签`、心情、抱抱、匿名评论、举报（3 人举报自动隐藏）；侧栏有搜索、12 周热力图、热门标签和心情统计；管理员可置顶 |
 | 提问箱 | `/box` | 匿名向站长提问，回答后（提问者允许时）公开展示 |
 | 会员 | `/pricing` | 爱发电在线支付 + 兑换码，会员天数可叠加 |
 | 账户 | `/account` | 会员状态、今日用量、订单、我的树洞 / 提问、修改密码 |
@@ -48,6 +49,12 @@ Vercel 项目 → Storage → Create Database → Neon Postgres → 连接到本
 
 ### 4. 会员价格和爱发电
 
+会员页是小报童式的“专栏卡片”：介绍、权益、选时长、一个购买按钮，手机上底部有固定的购买栏。`src/resources/plans.ts` 里可以改这些文案：
+
+- `MEMBERSHIP_INTRO`：卡片里的介绍。
+- `PRICE_NOTE`：价格下方的一行说明（例如早鸟价），留空不显示。
+- `SHOW_MEMBER_COUNT_FROM`：会员人数达到多少才显示“已有 N 位会员”（默认 10）。
+
 1. 在爱发电创建 3 个方案（月 / 季 / 年），记下每个方案的 `plan_id`。
 2. 打开 `src/resources/plans.ts`，给每个套餐填 `price`（元）和 `afdianPlanId`；额度在同一个文件的 `FREE_QUOTAS` / `MEMBER_QUOTAS`。
 3. 在 <https://afdian.com/dashboard/dev> 获取 `user_id` 和 API Token，填到 `AFDIAN_USER_ID`、`AFDIAN_TOKEN`。
@@ -76,7 +83,7 @@ npm run dev            # http://localhost:3000
 | 命令 | 作用 |
 | --- | --- |
 | `npm run dev` / `npm run build` | 开发 / 生产构建（会先把 pdf.js 的 worker 和字符映射表复制到 `public/pdfjs/`） |
-| `npm test` | 单元测试（内容审核、昵称、页码解析、爱发电签名、密码、套餐、检索、表格） |
+| `npm test` | 单元测试（内容审核、昵称、标签、页码解析、爱发电签名、密码、套餐、检索、表格、各个小工具） |
 | `npm run typecheck` | TypeScript 类型检查 |
 | `npm run lint` | Biome 代码检查 |
 
@@ -90,10 +97,11 @@ src/
     api/box           提问箱
     api/pay           下单、爱发电 Webhook、订单查询、兑换码
     api/admin         管理后台接口
-  components/         界面组件（shell 外框、session 登录态、community 社区、tools 工具、billing 会员）
+  components/         界面组件（shell 外框、session 登录态、community 社区、tools 工具、kit 小工具、summer 首页插画、billing 会员）
   lib/                前后端共用的纯函数（审核、昵称、格式转换、检索……）
   lib/server/         只在服务器运行：数据库、鉴权、额度、爱发电、AI
-  resources/          站点信息、套餐与额度、图标、主题
+  lib/kit/            小工具的纯计算逻辑（有单元测试）
+  resources/          站点信息、套餐与额度、小工具清单（kit.ts）、图标、主题
 tests/                单元测试
 ```
 

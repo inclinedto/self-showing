@@ -1,0 +1,151 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 160px;
+  padding: 24px 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--brand-alpha-weak), var(--accent-alpha-weak));
+  text-align: center;
+}
+
+.cardLabel {
+  font-size: var(--font-size-body-s);
+  color: var(--neutral-on-background-weak);
+}
+
+.cardValue {
+  font-size: clamp(1.75rem, 7vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--brand-on-background-strong);
+  overflow-wrap: anywhere;
+}
+
+.cardPlaceholder {
+  font-size: var(--font-size-body-m);
+  color: var(--neutral-on-background-medium);
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0 4px;
+  perspective: 800px;
+}
+
+.coin {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 3rem;
+  font-weight: 700;
+  backface-visibility: hidden;
+  box-shadow: inset 0 0 0 8px var(--neutral-alpha-medium);
+}
+
+.front {
+  background: var(--accent-solid-strong);
+  color: var(--accent-on-solid-strong);
+}
+
+.back {
+  background: var(--brand-solid-strong);
+  color: var(--brand-on-solid-strong);
+  transform: rotateY(180deg);
+}
+
+.verdict {
+  margin: 0;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--neutral-on-background-strong);
+}
+
+.dice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 8px 0;
+}
+
+.die {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  width: 72px;
+  height: 72px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--neutral-alpha-medium);
+  border-radius: 16px;
+  background: var(--neutral-background-strong);
+  animation: tumble 0.45s ease-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.pip {
+  align-self: center;
+  justify-self: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--neutral-on-background-strong);
+}
+
+.pipRed {
+  background: var(--danger-solid-strong);
+}
+
+@keyframes tumble {
+  0% {
+    transform: rotate(-200deg) scale(0.6);
+    opacity: 0.2;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.number {
+  min-width: 2.5em;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--brand-alpha-weak);
+  color: var(--brand-on-background-strong);
+  font-family: var(--font-code);
+  font-weight: 600;
+  text-align: center;
+}

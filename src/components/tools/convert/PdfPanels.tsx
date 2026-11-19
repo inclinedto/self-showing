@@ -111,7 +111,7 @@ export function PdfToImagesPanel() {
       if (files.length === 1) {
         downloadBlob(new Blob([files[0].data as BlobPart], { type: format }), files[0].name);
       } else {
-        downloadBlob(await zipFiles(files), `${baseName(picked.file.name)}-图片.zip`);
+        downloadBlob(zipFiles(files), `${baseName(picked.file.name)}-图片.zip`);
       }
       setDone(`已导出 ${files.length} 张图片，浏览器已开始下载。`);
     } catch (runError) {
@@ -275,7 +275,7 @@ export function PdfSplitPanel() {
       } else {
         setProgress({ done: 0, total: picked.pages });
         const files = await splitEveryPage(picked.file, (count, total) => setProgress({ done: count, total }));
-        downloadBlob(await zipFiles(files), `${baseName(picked.file.name)}-拆分.zip`);
+        downloadBlob(zipFiles(files), `${baseName(picked.file.name)}-拆分.zip`);
         setDone(`已拆分为 ${files.length} 个 PDF，打包下载中。`);
       }
     } catch (runError) {

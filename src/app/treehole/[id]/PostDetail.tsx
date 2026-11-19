@@ -4,7 +4,7 @@ import { Button, Column, Feedback, Heading, Icon, Row, Text, Textarea, useToast 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CrisisNotice } from "@/components/community/CrisisNotice";
-import { PostCard } from "@/components/community/PostCard";
+import { MemoAvatar, PostCard } from "@/components/community/PostCard";
 import { ReportDialog } from "@/components/community/ReportDialog";
 import styles from "@/components/community/community.module.scss";
 import { QuotaHint } from "@/components/session/QuotaHint";
@@ -123,6 +123,7 @@ export function PostDetail({ id }: { id: number }) {
             {comments.map((comment) => (
               <div key={comment.id} className={styles.comment}>
                 <div className={styles.meta}>
+                  <MemoAvatar alias={comment.alias} />
                   <span className={styles.alias}>{comment.alias}</span>
                   {comment.isAuthor && <span className={styles.authorBadge}>洞主</span>}
                   {comment.mine && !comment.isAuthor && <span>（我）</span>}

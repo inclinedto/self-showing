@@ -70,12 +70,23 @@ export type PostItem = {
   alias: string;
   mood: string | null;
   content: string;
+  tags: string[];
+  pinned: boolean;
   likeCount: number;
   commentCount: number;
   createdAt: string;
   liked: boolean;
   mine: boolean;
   status: PostStatus;
+};
+
+export type TreeholeStats = {
+  /** Posts per Beijing day (YYYY-MM-DD) for the last 12 weeks; days without posts are omitted. */
+  days: { date: string; count: number }[];
+  tags: { tag: string; count: number }[];
+  moods: { mood: string; count: number }[];
+  total: number;
+  today: number;
 };
 
 export type CommentItem = {

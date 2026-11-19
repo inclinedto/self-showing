@@ -1,8 +1,9 @@
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Fredoka, Geist_Mono, Nunito, ZCOOL_KuaiLe } from "next/font/google";
 
-// Geist has no CJK glyphs, so Chinese text falls through to the system fonts listed here.
+// Nunito and Fredoka have no CJK glyphs, so Chinese text falls through to the next family in each stack:
+// system fonts for body text, 站酷快乐体 for headings (see --font-heading in globals.scss).
 // next/font only accepts literal option objects, which is why the lists are repeated.
-export const sansFont = Geist({
+export const sansFont = Nunito({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -16,14 +17,22 @@ export const monoFont = Geist_Mono({
   fallback: ["Menlo", "Consolas", "PingFang SC", "Microsoft YaHei", "monospace"],
 });
 
-/** Literary serif for the English lines (the hero quote and small accents). */
-export const displayFont = Instrument_Serif({
+/** Rounded display face for English lines: the hero quote, kickers and headings. */
+export const displayFont = Fredoka({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700"],
   display: "swap",
-  fallback: ["Georgia", "Times New Roman", "Songti SC", "serif"],
+});
+
+/** 站酷快乐体: playful CJK headings. Google serves it in unicode-range slices, so pages only fetch the glyphs they use. */
+export const cuteFont = ZCOOL_KuaiLe({
+  variable: "--font-cute",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  preload: false,
+  fallback: ["PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "sans-serif"],
 });
 
 /**

@@ -3,7 +3,9 @@ import classNames from "classnames";
 import Link from "next/link";
 import { QuotaTable } from "@/components/billing/QuotaTable";
 import { LatestPosts } from "@/components/community/LatestPosts";
+import { SummerScene } from "@/components/summer/SummerScene";
 import type { IconName } from "@/resources/icons";
+import { kitTools } from "@/resources/kit";
 import { community, site, tools } from "@/resources/site";
 import styles from "./home.module.scss";
 
@@ -16,7 +18,7 @@ const promises: { icon: IconName; title: string; description: string }[] = [
   {
     icon: "shield",
     title: "文件尽量不出浏览器",
-    description: "文档在本地解析，格式转换全程离线；AI 工具只发送必要的页面或片段，服务器不保存。",
+    description: "文档在本地解析，格式转换和小工具全程离线；AI 工具只发送必要的页面或片段，服务器不保存。",
   },
   {
     icon: "key",
@@ -27,11 +29,26 @@ const promises: { icon: IconName; title: string; description: string }[] = [
 
 const CARD_TONES = { "/treehole": styles.sea, "/box": styles.sunset } as const;
 
-function SectionTitle({ id, kicker, title, description }: { id: string; kicker: string; title: string; description: string }) {
+const FEATURED_KIT = ["qrcode", "grid", "watermark", "daxie", "wordcount", "loan", "json", "decide"];
+
+function SectionTitle({
+  id,
+  emoji,
+  kicker,
+  title,
+  description,
+}: {
+  id: string;
+  emoji: string;
+  kicker: string;
+  title: string;
+  description: string;
+}) {
   return (
     <div className={styles.sectionTitle}>
-      <span className={styles.kicker} lang="en">
-        {kicker}
+      <span className={styles.kicker}>
+        <span aria-hidden="true">{emoji}</span>
+        <span lang="en">{kicker}</span>
       </span>
       <Heading as="h2" id={id} variant="heading-strong-l">
         {title}
@@ -45,13 +62,15 @@ function SectionTitle({ id, kicker, title, description }: { id: string; kicker: 
 
 export default function Home() {
   const [before, after] = site.quote.text.split("summer’s day");
+  const featured = FEATURED_KIT.map((slug) => kitTools.find((tool) => tool.slug === slug)).filter((tool) => tool !== undefined);
+
   return (
     <div className={styles.page}>
       <section className={styles.hero} aria-labelledby="hero-title">
-        <div className={styles.sun} aria-hidden="true" />
-        <Tag size="m" variant="accent" prefixIcon="sun">
-          匿名树洞 · 提问箱 · 实用工具
-        </Tag>
+        <SummerScene />
+        <span className={styles.badge}>
+          <span aria-hidden="true">🌴</span> 匿名树洞 · 提问箱 · 实用工具
+        </span>
         <blockquote className={styles.quoteBlock} cite="https://en.wikipedia.org/wiki/Sonnet_18">
           <h1 id="hero-title" className={styles.quote} lang="en">
             {before}
@@ -63,7 +82,7 @@ export default function Home() {
           </footer>
         </blockquote>
         <p className={styles.translation}>“{site.quote.translation}”</p>
-        <Text variant="body-default-l" onBackground="neutral-weak" className={styles.subtitle}>
+        <Text variant="body-default-l" onBackground="neutral-medium" className={styles.subtitle}>
           {site.description}
         </Text>
         <div className={styles.actions}>
@@ -74,15 +93,12 @@ export default function Home() {
             向站长提问
           </Button>
         </div>
-        <svg className={styles.waves} viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 40 C 150 10 300 70 450 40 S 750 10 900 40 S 1100 70 1200 40 V80 H0 Z" />
-          <path d="M0 56 C 200 30 350 80 600 56 S 1000 30 1200 56 V80 H0 Z" />
-        </svg>
       </section>
 
       <section className={styles.section} aria-labelledby="community-title">
         <SectionTitle
           id="community-title"
+          emoji="🐚"
           kicker="Whisper to the sea"
           title="匿名社区"
           description="有些话不方便跟熟人说，那就说给陌生人听。"
@@ -109,12 +125,13 @@ export default function Home() {
         <div className={styles.sectionRow}>
           <SectionTitle
             id="tools-title"
+            emoji="🍉"
             kicker="Little helpers"
             title="实用工具"
             description="文档、表格、图片这些琐事，交给它们。"
           />
           <Button href="/tools" variant="tertiary" size="s" suffixIcon="arrowRight">
-            全部工具
+            全部 {tools.length + kitTools.length} 个工具
           </Button>
         </div>
         <div className={styles.toolGrid}>
@@ -133,12 +150,24 @@ export default function Home() {
             </Link>
           ))}
         </div>
+        <div className={styles.kitStrip}>
+          <span className={styles.kitLabel}>还有这些顺手的小工具，免费不限次：</span>
+          <div className={styles.kitLinks}>
+            {featured.map((tool) => (
+              <Link key={tool.slug} href={`/tools/${tool.slug}`} className={styles.kitLink}>
+                <Icon name={tool.icon} size="xs" />
+                {tool.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className={styles.plans} aria-labelledby="plans-title">
         <div className={styles.sectionRow}>
           <SectionTitle
             id="plans-title"
+            emoji="🍹"
             kicker="Free every day"
             title="免费用户每天都能用"
             description="额度每天北京时间零点重置。用得多再开通会员，支持站长继续维护。"

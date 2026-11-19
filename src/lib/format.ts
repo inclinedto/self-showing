@@ -34,6 +34,26 @@ export function formatDateTime(iso: string): string {
   }).format(new Date(iso));
 }
 
+/** The Beijing calendar day of an instant as YYYY-MM-DD. */
+export function beijingDateKey(value: string | number | Date): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: BEIJING, year: "numeric", month: "2-digit", day: "2-digit" }).format(
+    new Date(value),
+  );
+}
+
+const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+
+/** Timeline separator for a Beijing day key: 今天, 昨天, 11月17日 周一, or 2025年3月2日 周日 in earlier years. */
+export function dayLabel(key: string, now = Date.now()): string {
+  const today = beijingDateKey(now);
+  if (key === today) return "今天";
+  if (key === beijingDateKey(now - 86_400_000)) return "昨天";
+  const [year, month, day] = key.split("-").map(Number);
+  const weekday = WEEKDAYS[new Date(Date.UTC(year, month - 1, day)).getUTCDay()];
+  const prefix = String(year) === today.slice(0, 4) ? "" : `${year}年`;
+  return `${prefix}${month}月${day}日 ${weekday}`;
+}
+
 export function formatYuan(cents: number): string {
   return `¥${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)}`;
 }

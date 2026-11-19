@@ -1,0 +1,50 @@
+.preview {
+  display: grid;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: var(--neutral-alpha-weak);
+  cursor: pointer;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.15s ease;
+  }
+
+  &:hover img {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-solid-strong);
+    outline-offset: 2px;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  border-radius: var(--radius-full);
+  background: var(--brand-solid-strong);
+  color: var(--brand-on-solid-strong);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

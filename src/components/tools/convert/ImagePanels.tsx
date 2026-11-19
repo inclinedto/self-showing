@@ -83,7 +83,7 @@ export function ImageConvertPanel() {
     const files = await Promise.all(
       results.map(async (result) => ({ name: result.name, data: new Uint8Array(await result.blob.arrayBuffer()) })),
     );
-    downloadBlob(await zipFiles(files), "图片转换结果.zip");
+    downloadBlob(zipFiles(files), "图片转换结果.zip");
   };
 
   const busy = progress !== null;

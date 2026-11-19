@@ -8,7 +8,7 @@ import { Footer } from "@/components/shell/Footer";
 import { Header } from "@/components/shell/Header";
 import { Providers } from "@/components/shell/Providers";
 import { site } from "@/resources/site";
-import { displayFont, monoFont, sansFont, THEME_STORAGE_KEY, theme } from "@/resources/theme";
+import { cuteFont, displayFont, monoFont, sansFont, THEME_STORAGE_KEY, theme } from "@/resources/theme";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.baseURL),
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="zh-CN"
       suppressHydrationWarning
-      className={classNames(sansFont.variable, monoFont.variable, displayFont.variable)}
+      className={classNames(sansFont.variable, monoFont.variable, displayFont.variable, cuteFont.variable)}
       data-theme="light"
       {...themeAttributes}
     >

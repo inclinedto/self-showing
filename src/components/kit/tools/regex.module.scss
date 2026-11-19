@@ -1,0 +1,13 @@
+mark.alt {
+  background: var(--brand-alpha-strong);
+}
+
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.muted {
+  color: var(--neutral-on-background-weak);
+}

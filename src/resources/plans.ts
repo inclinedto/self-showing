@@ -80,11 +80,21 @@ export const PLANS: Plan[] = [
   },
 ];
 
+/** 会员页顶部的介绍，写成你自己想对访客说的话。 */
+export const MEMBERSHIP_INTRO =
+  "这是站长一个人在维护的小网站。树洞、提问箱和小工具都会一直免费；经常用 AI 工具的话，开通会员可以拿到更多额度，也算请站长喝杯椰子水。";
+
+/** 价格旁边的一行说明，比如「早鸟价：前 100 位会员享受，之后恢复原价」。留空则不显示。 */
+export const PRICE_NOTE = "";
+
+/** 会员人数达到这个数才在会员页显示「已有 N 位会员」。 */
+export const SHOW_MEMBER_COUNT_FROM = 10;
+
 export const MEMBER_PERKS = [
-  "AI 工具每日额度大幅提升",
-  "树洞、提问箱发帖额度提升",
-  "新功能优先体验",
-  "支持站长持续更新和维护",
+  "🤖 AI 工具每日额度大幅提升",
+  "🌊 树洞、提问箱发帖额度提升",
+  "✨ 新功能优先体验",
+  "🥥 支持站长持续更新和维护",
 ];
 
 export function getPlan(id: string): Plan | undefined {

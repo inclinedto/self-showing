@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { ALIAS_COUNT, aliasFromHex } from "../src/lib/alias.ts";
+import { extractTags, isValidTag, MAX_TAGS, splitTags } from "../src/lib/community.ts";
 import { checkContent, findBlockedWord, mentionsCrisis } from "../src/lib/moderation.ts";
 
 test("checkContent lets ordinary venting through", () => {
@@ -56,4 +57,30 @@ test("aliasFromHex is stable and spreads over many nicknames", () => {
   }
   assert.ok(seen.size > 300, `only ${seen.size} distinct aliases`);
   assert.ok(aliasFromHex("zz").length >= 2);
+});
+
+test("extractTags finds distinct lower-cased #tags", () => {
+  assert.deepEqual(extractTags("今天 #夏天 好热，#小确幸 吃到西瓜 #夏天 #Summer"), ["夏天", "小确幸", "summer"]);
+  assert.deepEqual(extractTags("#加班，好累"), ["加班"]);
+  assert.deepEqual(extractTags("第 #1 名, a#b, &#123;, # 空格"), []);
+  assert.deepEqual(extractTags("#一个超级超级超级超级超级超级长的标签啊"), []);
+  assert.equal(extractTags("#a #b #c #d #e #f #g").length, MAX_TAGS);
+});
+
+test("splitTags keeps the text intact and marks tag runs", () => {
+  const segments = splitTags("早安 #晚安 ，#2024 也行");
+  assert.equal(segments.map((segment) => segment.text).join(""), "早安 #晚安 ，#2024 也行");
+  assert.deepEqual(
+    segments.filter((segment) => segment.tag).map((segment) => segment.tag),
+    ["晚安"],
+  );
+  assert.deepEqual(splitTags("没有标签"), [{ text: "没有标签" }]);
+});
+
+test("isValidTag accepts words and rejects punctuation or bare numbers", () => {
+  assert.ok(isValidTag("考研"));
+  assert.ok(isValidTag("vue_3"));
+  assert.ok(!isValidTag("123"));
+  assert.ok(!isValidTag("a b"));
+  assert.ok(!isValidTag(""));
 });

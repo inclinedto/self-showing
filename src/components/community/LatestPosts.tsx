@@ -4,11 +4,12 @@ import { Tag } from "@once-ui-system/core";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
-import { type Mood, MOOD_COLORS } from "@/lib/community";
+import { type Mood, MOOD_COLORS, splitTags } from "@/lib/community";
 import { relativeTime } from "@/lib/format";
 import { mentionsCrisis } from "@/lib/moderation";
 import type { PostItem } from "@/lib/types";
 import styles from "./LatestPosts.module.scss";
+import { MemoAvatar } from "./PostCard";
 
 const SHOWN = 3;
 
@@ -42,6 +43,7 @@ export function LatestPosts() {
         {posts.map((post) => (
           <Link key={post.id} href={`/treehole/${post.id}`} className={styles.note}>
             <span className={styles.meta}>
+              <MemoAvatar alias={post.alias} />
               <span className={styles.alias}>{post.alias}</span>
               {post.mood && (
                 <Tag size="s" variant={MOOD_COLORS[post.mood as Mood] ?? "neutral"}>
@@ -50,7 +52,18 @@ export function LatestPosts() {
               )}
               <span className={styles.time}>{relativeTime(post.createdAt)}</span>
             </span>
-            <span className={styles.content}>{post.content}</span>
+            <span className={styles.content}>
+              {splitTags(post.content).map((segment, index) =>
+                segment.tag ? (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: segments are derived from immutable text.
+                  <span key={index} className={styles.tag}>
+                    {segment.text}
+                  </span>
+                ) : (
+                  segment.text
+                ),
+              )}
+            </span>
             <span className={styles.stats}>
               抱抱 {post.likeCount} · 评论 {post.commentCount}
             </span>
