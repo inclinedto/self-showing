@@ -3,6 +3,7 @@
 import { Tag } from "@once-ui-system/core";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "@/components/session/SessionProvider";
 import { api } from "@/lib/api";
 import { type Mood, MOOD_COLORS, splitTags } from "@/lib/community";
 import { relativeTime } from "@/lib/format";
@@ -15,9 +16,12 @@ const SHOWN = 3;
 
 /** A peek at the newest posts on the home page; renders nothing until the community is live. */
 export function LatestPosts() {
+  const { status } = useSession();
   const [posts, setPosts] = useState<PostItem[]>([]);
+  const dbReady = status?.db === true;
 
   useEffect(() => {
+    if (!dbReady) return;
     let alive = true;
     api<{ posts: PostItem[] }>("/api/treehole")
       .then((data) => {
@@ -28,7 +32,7 @@ export function LatestPosts() {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [dbReady]);
 
   if (posts.length === 0) return null;
   return (
