@@ -32,10 +32,10 @@ export function ComingSoon() {
     <Notice
       icon="lock"
       title="账号与社区功能即将开放"
-      description="站长正在配置数据库和会员系统，开放后就可以注册、发树洞和使用 AI 工具了。格式转换工具现在就能免费使用。"
+      description="站长正在配置数据库和会员系统，开放后就可以注册、发树洞和使用 AI 工具了。格式转换和二十多个小工具现在就能免费使用 🧰"
     >
-      <Button href="/tools/convert" variant="secondary" size="m" prefixIcon="convert">
-        去用格式转换
+      <Button href="/tools" variant="secondary" size="m" prefixIcon="grid">
+        去工具箱逛逛
       </Button>
     </Notice>
   );
