@@ -16,10 +16,16 @@ export type Tool = {
 export type NavItem = { href: `/${string}`; label: string; icon: IconName };
 
 export const site = {
-  name: "ZJS 小站",
-  title: "ZJS 小站 · AI 工具与匿名树洞",
+  name: "角度偏爱",
+  title: "角度偏爱 · 匿名树洞与夏日小工具",
   description:
-    "表格提取、文档问答、AI 小助手和格式转换等实用工具，还有可以匿名说心里话的树洞和提问箱。",
+    "一个可以匿名说心里话的树洞和提问箱，顺便放了几个好用的小工具：表格提取、文档问答、AI 小助手和格式转换。",
+  tagline: "说给陌生人听的话，和几个顺手的小工具。",
+  quote: {
+    text: "Shall I compare thee to a summer’s day?",
+    source: "William Shakespeare, Sonnet 18",
+    translation: "我能否将你比作夏日？",
+  },
   baseURL: "https://www.zhangjinshuai.buzz",
   /** Shown on the legal pages and the footer; leave empty to hide. */
   contactEmail: "",
@@ -91,9 +97,9 @@ export const community = [
 ] as const satisfies { path: `/${string}`; name: string; icon: IconName; summary: string; description: string }[];
 
 export const nav: NavItem[] = [
-  { href: "/tools", label: "工具", icon: "grid" },
   { href: "/treehole", label: "树洞", icon: "tree" },
   { href: "/box", label: "提问箱", icon: "inbox" },
+  { href: "/tools", label: "工具", icon: "grid" },
   { href: "/pricing", label: "会员", icon: "crown" },
 ];
 

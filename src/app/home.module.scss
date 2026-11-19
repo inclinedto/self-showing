@@ -1,27 +1,398 @@
-.hero {
+.page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 48px 0 8px;
-  text-align: center;
+  gap: 80px;
 
   @media (max-width: 768px) {
-    padding-top: 16px;
+    gap: 56px;
   }
 }
 
-.title {
+// ---------- hero: a summer sky over the sea ----------
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 64px 20px 96px;
+  border-radius: 32px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--brand-alpha-weak) 0%, transparent 80%);
+
+  @media (max-width: 768px) {
+    padding: 36px 14px 80px;
+    border-radius: 24px;
+  }
+}
+
+.sun {
+  position: absolute;
+  z-index: -1;
+  top: -56px;
+  right: 7%;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 42% 42%,
+    #fff3c4 0%,
+    #ffc247 34%,
+    rgb(253 122 47 / 0.55) 58%,
+    rgb(253 122 47 / 0) 72%
+  );
+  animation: sun-float 9s ease-in-out infinite;
+
+  [data-theme="dark"] & {
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    top: -48px;
+    right: -36px;
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@keyframes sun-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(10px) scale(1.03);
+  }
+}
+
+.quoteBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin: 0;
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  line-height: 1.2;
-  font-weight: 700;
+}
+
+.quote {
+  max-width: 920px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  line-height: 1.04;
   letter-spacing: -0.01em;
   color: var(--neutral-on-background-strong);
   text-wrap: balance;
 }
 
+.summer {
+  // Italic glyphs overhang their box; the padding keeps the clipped gradient from cutting them off.
+  padding: 0 0.06em;
+  font-style: italic;
+  background: linear-gradient(100deg, #ffb020 0%, #fd6325 55%, #ec4f8f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cite {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--neutral-on-background-weak);
+}
+
+.translation {
+  margin: 0;
+  font-size: var(--font-size-body-m);
+  letter-spacing: 0.08em;
+  color: var(--neutral-on-background-medium);
+}
+
 .subtitle {
-  max-width: 640px;
+  max-width: 600px;
   text-wrap: balance;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.waves {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 64px;
+
+  path:first-child {
+    fill: color-mix(in srgb, var(--brand-solid-medium) 14%, transparent);
+  }
+
+  path:last-child {
+    fill: color-mix(in srgb, var(--brand-solid-medium) 24%, transparent);
+  }
+}
+
+// ---------- sections ----------
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.sectionTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kicker {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--accent-on-background-medium);
+}
+
+// ---------- community postcards ----------
+
+.communityGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.postcard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 230px;
+  padding: 28px;
+  border: 1px solid var(--tone-border);
+  border-radius: 28px;
+  background: linear-gradient(150deg, var(--tone-weak) 0%, var(--tone-medium) 100%);
+  color: var(--neutral-on-background-strong);
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: -60px;
+    bottom: -90px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--tone-medium) 0%, transparent 70%);
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px -28px var(--tone-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-border-strong);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 0;
+    padding: 22px;
+    border-radius: 22px;
+  }
+}
+
+.sea {
+  --tone-weak: var(--brand-alpha-weak);
+  --tone-medium: var(--brand-alpha-medium);
+  --tone-strong: var(--brand-alpha-strong);
+  --tone-border: var(--brand-alpha-medium);
+  --tone-text: var(--brand-on-background-strong);
+}
+
+.sunset {
+  --tone-weak: var(--accent-alpha-weak);
+  --tone-medium: var(--accent-alpha-medium);
+  --tone-strong: var(--accent-alpha-strong);
+  --tone-border: var(--accent-alpha-medium);
+  --tone-text: var(--accent-on-background-strong);
+}
+
+.postcardIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--page-background);
+  color: var(--tone-text);
+  box-shadow: 0 6px 16px -10px var(--tone-strong);
+}
+
+.postcardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.postcardText {
+  max-width: 34em;
+  font-size: var(--font-size-body-s);
+  line-height: 1.75;
+  color: var(--neutral-on-background-medium);
+}
+
+.postcardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  font-size: var(--font-size-body-s);
+  font-weight: 600;
+  color: var(--tone-text);
+}
+
+// ---------- tools ----------
+
+.toolGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tool {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--neutral-alpha-weak);
+  border-radius: 20px;
+  background: var(--surface-background);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand-alpha-medium);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-border-strong);
+    outline-offset: 2px;
+  }
+}
+
+.toolHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.toolIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--brand-alpha-weak);
+  color: var(--brand-on-background-strong);
+}
+
+.toolName {
+  font-weight: 600;
+  color: var(--neutral-on-background-strong);
+}
+
+.toolText {
+  font-size: var(--font-size-body-s);
+  line-height: 1.6;
+  color: var(--neutral-on-background-weak);
+}
+
+// ---------- plans + promises ----------
+
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  border: 1px solid var(--accent-alpha-medium);
+  border-radius: 28px;
+  background: linear-gradient(160deg, var(--accent-alpha-weak) 0%, var(--brand-alpha-weak) 100%);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    border-radius: 22px;
+  }
+}
+
+.promises {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.promise {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--neutral-alpha-weak);
+  border-radius: 20px;
+  background: var(--surface-background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun {
+    animation: none;
+  }
+
+  .postcard,
+  .tool {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
 }

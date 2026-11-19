@@ -5,19 +5,19 @@ import styles from "./Footer.module.scss";
 
 const GROUPS = [
   {
+    title: "社区",
+    links: [
+      { href: "/treehole", label: "树洞" },
+      { href: "/box", label: "提问箱" },
+    ],
+  },
+  {
     title: "工具",
     links: [
       { href: "/tools/extract", label: "表格提取" },
       { href: "/tools/ask", label: "文档问答" },
       { href: "/tools/chat", label: "AI 小助手" },
       { href: "/tools/convert", label: "格式转换" },
-    ],
-  },
-  {
-    title: "社区",
-    links: [
-      { href: "/treehole", label: "树洞" },
-      { href: "/box", label: "提问箱" },
     ],
   },
   {
@@ -34,13 +34,19 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className={styles.footer}>
+      <svg className={styles.wave} viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 24 C 200 4 400 40 600 22 S 1000 4 1200 24 V40 H0 Z" />
+      </svg>
       <div className={styles.inner}>
         <div className={styles.about}>
           <Link href="/" className={styles.brand}>
-            <Logo size={24} />
+            <Logo size={24} id="footer-logo" />
             <span>{site.name}</span>
           </Link>
-          <p className={styles.tagline}>好用的 AI 小工具，和一个可以说心里话的地方。</p>
+          <p className={styles.quote} lang="en">
+            {site.quote.text}
+          </p>
+          <p className={styles.tagline}>{site.tagline}</p>
           {site.contactEmail && (
             <a className={styles.contact} href={`mailto:${site.contactEmail}`}>
               {site.contactEmail}

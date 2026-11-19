@@ -8,7 +8,7 @@ import { Footer } from "@/components/shell/Footer";
 import { Header } from "@/components/shell/Header";
 import { Providers } from "@/components/shell/Providers";
 import { site } from "@/resources/site";
-import { monoFont, sansFont, THEME_STORAGE_KEY, theme } from "@/resources/theme";
+import { displayFont, monoFont, sansFont, THEME_STORAGE_KEY, theme } from "@/resources/theme";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.baseURL),
@@ -29,8 +29,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+    { media: "(prefers-color-scheme: light)", color: "#e8f8fd" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a1418" },
   ],
 };
 
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="zh-CN"
       suppressHydrationWarning
-      className={classNames(sansFont.variable, monoFont.variable)}
+      className={classNames(sansFont.variable, monoFont.variable, displayFont.variable)}
       data-theme="light"
       {...themeAttributes}
     >

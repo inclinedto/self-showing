@@ -1,19 +1,22 @@
-import { Button, Card, Column, Grid, Heading, Icon, Row, Tag, Text } from "@once-ui-system/core";
+import { Button, Heading, Icon, Tag, Text } from "@once-ui-system/core";
+import classNames from "classnames";
+import Link from "next/link";
 import { QuotaTable } from "@/components/billing/QuotaTable";
+import { LatestPosts } from "@/components/community/LatestPosts";
 import type { IconName } from "@/resources/icons";
 import { community, site, tools } from "@/resources/site";
 import styles from "./home.module.scss";
 
 const promises: { icon: IconName; title: string; description: string }[] = [
   {
-    icon: "shield",
-    title: "文件尽量不出浏览器",
-    description: "文档在本地解析，格式转换全程离线；AI 工具只发送必要的页面或片段，服务器不保存。",
-  },
-  {
     icon: "eyeOff",
     title: "社区完全匿名",
     description: "树洞和提问箱只显示随机昵称，不展示用户名，也不能留联系方式。",
+  },
+  {
+    icon: "shield",
+    title: "文件尽量不出浏览器",
+    description: "文档在本地解析，格式转换全程离线；AI 工具只发送必要的页面或片段，服务器不保存。",
   },
   {
     icon: "key",
@@ -22,150 +25,134 @@ const promises: { icon: IconName; title: string; description: string }[] = [
   },
 ];
 
-export default function Home() {
+const CARD_TONES = { "/treehole": styles.sea, "/box": styles.sunset } as const;
+
+function SectionTitle({ id, kicker, title, description }: { id: string; kicker: string; title: string; description: string }) {
   return (
-    <Column fillWidth gap="80" s={{ gap: "56" }}>
-      <section className={styles.hero}>
-        <Tag size="m" variant="brand" prefixIcon="sparkles">
-          AI 工具 · 匿名树洞 · 提问箱
+    <div className={styles.sectionTitle}>
+      <span className={styles.kicker} lang="en">
+        {kicker}
+      </span>
+      <Heading as="h2" id={id} variant="heading-strong-l">
+        {title}
+      </Heading>
+      <Text variant="body-default-s" onBackground="neutral-weak">
+        {description}
+      </Text>
+    </div>
+  );
+}
+
+export default function Home() {
+  const [before, after] = site.quote.text.split("summer’s day");
+  return (
+    <div className={styles.page}>
+      <section className={styles.hero} aria-labelledby="hero-title">
+        <div className={styles.sun} aria-hidden="true" />
+        <Tag size="m" variant="accent" prefixIcon="sun">
+          匿名树洞 · 提问箱 · 实用工具
         </Tag>
-        <h1 className={styles.title}>
-          好用的 AI 小工具，
-          <br />
-          和一个能说心里话的地方
-        </h1>
+        <blockquote className={styles.quoteBlock} cite="https://en.wikipedia.org/wiki/Sonnet_18">
+          <h1 id="hero-title" className={styles.quote} lang="en">
+            {before}
+            <em className={styles.summer}>summer’s day</em>
+            {after}
+          </h1>
+          <footer className={styles.cite} lang="en">
+            — {site.quote.source}
+          </footer>
+        </blockquote>
+        <p className={styles.translation}>“{site.quote.translation}”</p>
         <Text variant="body-default-l" onBackground="neutral-weak" className={styles.subtitle}>
           {site.description}
         </Text>
-        <Row gap="12" wrap horizontal="center">
-          <Button href="/tools" size="l" variant="primary" suffixIcon="arrowRight">
-            开始使用
+        <div className={styles.actions}>
+          <Button href="/treehole" size="l" variant="primary" prefixIcon="tree">
+            去树洞说说
           </Button>
-          <Button href="/treehole" size="l" variant="secondary" prefixIcon="tree">
-            去树洞看看
+          <Button href="/box" size="l" variant="secondary" prefixIcon="inbox">
+            向站长提问
           </Button>
-        </Row>
+        </div>
+        <svg className={styles.waves} viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 40 C 150 10 300 70 450 40 S 750 10 900 40 S 1100 70 1200 40 V80 H0 Z" />
+          <path d="M0 56 C 200 30 350 80 600 56 S 1000 30 1200 56 V80 H0 Z" />
+        </svg>
       </section>
 
-      <Column as="section" gap="24" aria-labelledby="tools-title">
-        <Row horizontal="between" vertical="end" gap="12">
-          <Column gap="4">
-            <Heading as="h2" id="tools-title" variant="heading-strong-l">
-              实用工具
-            </Heading>
-            <Text variant="body-default-s" onBackground="neutral-weak">
-              常见的文档、表格、图片琐事，交给它们。
-            </Text>
-          </Column>
+      <section className={styles.section} aria-labelledby="community-title">
+        <SectionTitle
+          id="community-title"
+          kicker="Whisper to the sea"
+          title="匿名社区"
+          description="有些话不方便跟熟人说，那就说给陌生人听。"
+        />
+        <div className={styles.communityGrid}>
+          {community.map((item) => (
+            <Link key={item.path} href={item.path} className={classNames(styles.postcard, CARD_TONES[item.path])}>
+              <span className={styles.postcardIcon}>
+                <Icon name={item.icon} size="m" />
+              </span>
+              <span className={styles.postcardTitle}>{item.name}</span>
+              <span className={styles.postcardText}>{item.description}</span>
+              <span className={styles.postcardLink}>
+                进入{item.name}
+                <Icon name="arrowRight" size="xs" />
+              </span>
+            </Link>
+          ))}
+        </div>
+        <LatestPosts />
+      </section>
+
+      <section className={styles.section} aria-labelledby="tools-title">
+        <div className={styles.sectionRow}>
+          <SectionTitle
+            id="tools-title"
+            kicker="Little helpers"
+            title="实用工具"
+            description="文档、表格、图片这些琐事，交给它们。"
+          />
           <Button href="/tools" variant="tertiary" size="s" suffixIcon="arrowRight">
             全部工具
           </Button>
-        </Row>
-        <Grid columns="2" s={{ columns: "1" }} gap="16">
+        </div>
+        <div className={styles.toolGrid}>
           {tools.map((tool) => (
-            <Card
-              key={tool.slug}
-              href={tool.path}
-              direction="column"
-              gap="12"
-              padding="24"
-              radius="l"
-              border="neutral-alpha-weak"
-              background="surface"
-              fillWidth
-            >
-              <Row horizontal="between" vertical="center" fillWidth>
-                <Row padding="8" radius="m" background="brand-alpha-weak">
-                  <Icon name={tool.icon} size="m" onBackground="brand-strong" />
-                </Row>
+            <Link key={tool.slug} href={tool.path} className={styles.tool}>
+              <span className={styles.toolHead}>
+                <span className={styles.toolIcon}>
+                  <Icon name={tool.icon} size="s" />
+                </span>
                 <Tag size="s" variant={tool.feature ? "neutral" : "success"}>
                   {tool.feature ? "每日免费额度" : "免费不限次"}
                 </Tag>
-              </Row>
-              <Heading as="h3" variant="heading-strong-m">
-                {tool.name}
-              </Heading>
-              <Text variant="body-default-s" onBackground="neutral-weak">
-                {tool.summary}
-              </Text>
-            </Card>
+              </span>
+              <span className={styles.toolName}>{tool.name}</span>
+              <span className={styles.toolText}>{tool.summary}</span>
+            </Link>
           ))}
-        </Grid>
-      </Column>
+        </div>
+      </section>
 
-      <Column as="section" gap="24" aria-labelledby="community-title">
-        <Column gap="4">
-          <Heading as="h2" id="community-title" variant="heading-strong-l">
-            匿名社区
-          </Heading>
-          <Text variant="body-default-s" onBackground="neutral-weak">
-            有些话不方便跟熟人说，那就说给陌生人听。
-          </Text>
-        </Column>
-        <Grid columns="2" s={{ columns: "1" }} gap="16">
-          {community.map((item) => (
-            <Card
-              key={item.path}
-              href={item.path}
-              direction="column"
-              gap="12"
-              padding="24"
-              radius="l"
-              border="neutral-alpha-weak"
-              background="surface"
-              fillWidth
-            >
-              <Row gap="12" vertical="center">
-                <Row padding="8" radius="m" background="accent-alpha-weak">
-                  <Icon name={item.icon} size="m" onBackground="accent-strong" />
-                </Row>
-                <Heading as="h3" variant="heading-strong-m">
-                  {item.name}
-                </Heading>
-              </Row>
-              <Text variant="body-default-s" onBackground="neutral-weak">
-                {item.description}
-              </Text>
-              <Row gap="4" vertical="center">
-                <Text variant="label-default-s" onBackground="brand-medium">
-                  进入{item.name}
-                </Text>
-                <Icon name="arrowRight" size="xs" onBackground="brand-medium" />
-              </Row>
-            </Card>
-          ))}
-        </Grid>
-      </Column>
-
-      <Column
-        as="section"
-        gap="24"
-        padding="32"
-        radius="xl"
-        border="brand-alpha-medium"
-        background="brand-alpha-weak"
-        s={{ padding: "20" }}
-        aria-labelledby="plans-title"
-      >
-        <Row horizontal="between" vertical="center" gap="16" s={{ direction: "column", vertical: "start" }}>
-          <Column gap="4">
-            <Heading as="h2" id="plans-title" variant="heading-strong-l">
-              免费用户每天都能用
-            </Heading>
-            <Text variant="body-default-s" onBackground="neutral-weak">
-              额度每天北京时间零点重置。用得多再开通会员，支持站长继续维护。
-            </Text>
-          </Column>
+      <section className={styles.plans} aria-labelledby="plans-title">
+        <div className={styles.sectionRow}>
+          <SectionTitle
+            id="plans-title"
+            kicker="Free every day"
+            title="免费用户每天都能用"
+            description="额度每天北京时间零点重置。用得多再开通会员，支持站长继续维护。"
+          />
           <Button href="/pricing" variant="primary" size="m" prefixIcon="crown">
             查看会员
           </Button>
-        </Row>
+        </div>
         <QuotaTable />
-      </Column>
+      </section>
 
-      <Grid as="section" columns="3" s={{ columns: "1" }} gap="16" aria-label="我们的承诺">
+      <section className={styles.promises} aria-label="我们的承诺">
         {promises.map((item) => (
-          <Column key={item.title} gap="8" padding="20" radius="l" border="neutral-alpha-weak">
+          <div key={item.title} className={styles.promise}>
             <Icon name={item.icon} size="m" onBackground="brand-medium" />
             <Heading as="h3" variant="heading-strong-s">
               {item.title}
@@ -173,9 +160,9 @@ export default function Home() {
             <Text variant="body-default-s" onBackground="neutral-weak">
               {item.description}
             </Text>
-          </Column>
+          </div>
         ))}
-      </Grid>
-    </Column>
+      </section>
+    </div>
   );
 }

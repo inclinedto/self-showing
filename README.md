@@ -1,8 +1,12 @@
-# ZJS 小站
+# 角度偏爱
 
 线上地址：<https://www.zhangjinshuai.buzz>
 
-一个中文的个人付费小站：几个好用的 AI 小工具，加上一个可以匿名说心里话的社区。免费用户每天有固定额度，开通会员额度更高。
+> *Shall I compare thee to a summer’s day?* — William Shakespeare, Sonnet 18
+
+一个夏天风格的中文个人付费网站：先是可以匿名说心里话的树洞和提问箱，再加几个好用的小工具。免费用户每天有固定额度，开通会员额度更高。
+
+站点名称、首页的英文引语和简介在 `src/resources/site.ts`，配色（Once UI 主题：cyan 海天蓝 + orange 阳光橙 + sand 沙滩色）在 `src/resources/theme.ts`。
 
 ## 功能
 

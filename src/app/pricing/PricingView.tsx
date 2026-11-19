@@ -122,7 +122,7 @@ export function PricingView() {
       <PageHeader
         icon="crown"
         title="会员"
-        description="免费用户每天都有额度。经常使用的话，开通会员可以获得更多额度，也能支持站长继续维护这个小站。"
+        description="免费用户每天都有额度。经常使用的话，开通会员可以获得更多额度，也能支持站长继续维护“角度偏爱”。"
       />
 
       {user?.isMember && user.memberUntil && (

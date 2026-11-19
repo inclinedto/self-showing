@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 
 // Geist has no CJK glyphs, so Chinese text falls through to the system fonts listed here.
 // next/font only accepts literal option objects, which is why the lists are repeated.
@@ -16,12 +16,25 @@ export const monoFont = Geist_Mono({
   fallback: ["Menlo", "Consolas", "PingFang SC", "Microsoft YaHei", "monospace"],
 });
 
-/** Applied as data-* attributes on <html>; values are Once UI design tokens. */
+/** Literary serif for the English lines (the hero quote and small accents). */
+export const displayFont = Instrument_Serif({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "Songti SC", "serif"],
+});
+
+/**
+ * Applied as data-* attributes on <html>; values are Once UI design tokens.
+ * Summer palette: cyan sea and sky, orange sun, sand beach.
+ */
 export const theme = {
-  neutral: "gray",
-  brand: "emerald",
-  accent: "indigo",
-  solid: "contrast",
+  neutral: "sand",
+  brand: "cyan",
+  accent: "orange",
+  solid: "color",
   "solid-style": "flat",
   border: "playful",
   surface: "translucent",
