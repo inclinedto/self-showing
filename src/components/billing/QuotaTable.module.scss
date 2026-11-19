@@ -1,0 +1,39 @@
+.wrap {
+  border: 1px solid var(--neutral-alpha-weak);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--page-background);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-body-s);
+  color: var(--neutral-on-background-strong);
+
+  th,
+  td {
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  thead th {
+    font-weight: 600;
+    background: var(--neutral-alpha-weak);
+    color: var(--neutral-on-background-medium);
+  }
+
+  tbody tr + tr {
+    border-top: 1px solid var(--neutral-alpha-weak);
+  }
+
+  th:first-child {
+    width: 40%;
+  }
+
+  .member {
+    font-weight: 600;
+    color: var(--brand-on-background-strong);
+  }
+}

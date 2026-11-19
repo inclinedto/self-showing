@@ -1,0 +1,41 @@
+{
+  "name": "zjs-tools",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/copy-pdfjs-assets.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/copy-pdfjs-assets.mjs",
+    "build": "next build",
+    "format": "biome format --write ./src ./tests ./scripts",
+    "start": "next start",
+    "lint": "biome lint ./src ./tests ./scripts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning \"tests/*.test.ts\""
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "@once-ui-system/core": "1.5.6",
+    "classnames": "^2.5.1",
+    "fflate": "^0.8.3",
+    "mammoth": "^1.13.0",
+    "next": "^16.0.10",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.5.438",
+    "postgres": "^3.4.9",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.3",
+    "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "sass": "^1.86.3",
+    "write-excel-file": "^4.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^20.17.30",
+    "@types/react": "^19.2.4",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.8.3"
+  }
+}

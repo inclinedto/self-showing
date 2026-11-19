@@ -1,0 +1,36 @@
+.choices {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.choice {
+  padding: 6px 12px;
+  border: 1px solid var(--neutral-alpha-medium);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--neutral-on-background-medium);
+  font-size: var(--font-size-body-s);
+  cursor: pointer;
+  user-select: none;
+
+  &:has(input:checked) {
+    border-color: var(--brand-border-medium);
+    background: var(--brand-alpha-weak);
+    color: var(--brand-on-background-strong);
+  }
+
+  &:has(input:focus-visible) {
+    outline: 2px solid var(--brand-border-strong);
+    outline-offset: 2px;
+  }
+
+  .choices:disabled & {
+    opacity: 0.6;
+    cursor: default;
+  }
+}

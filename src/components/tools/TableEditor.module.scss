@@ -1,0 +1,65 @@
+.scroller {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--neutral-alpha-medium);
+  border-radius: var(--radius-m);
+}
+
+.table {
+  border-collapse: collapse;
+  min-width: 100%;
+  font-size: var(--font-size-body-s);
+
+  th,
+  td {
+    border-bottom: 1px solid var(--neutral-alpha-weak);
+    border-right: 1px solid var(--neutral-alpha-weak);
+    padding: 0;
+    min-width: 6rem;
+  }
+
+  th:last-child,
+  td:last-child {
+    border-right: none;
+    min-width: 2.5rem;
+    width: 2.5rem;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  thead th {
+    background: var(--neutral-alpha-weak);
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--neutral-on-background-strong);
+    font: inherit;
+    padding: 0.5rem 0.625rem;
+    outline: none;
+
+    &:focus {
+      background: var(--brand-alpha-weak);
+    }
+  }
+
+  thead input {
+    font-weight: 600;
+  }
+}
+
+.rowAction {
+  display: flex;
+  justify-content: center;
+  opacity: 0.35;
+  transition: opacity 0.15s;
+
+  tr:hover &,
+  &:focus-within {
+    opacity: 1;
+  }
+}
